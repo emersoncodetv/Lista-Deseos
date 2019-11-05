@@ -13,20 +13,22 @@ fdk.handle(async function(input) {
       connectString: process.env.CONNECT_STRING || "madhack2_low"
     });
   }
+
+  const find_full_next_best_offer = input.next_best_offer.map(value => `'${value}'`);
+  const where_query = find_full_next_best_offer.join(",");
+
   const connection = await pool.getConnection();
   const records = await connection.execute(
-    `SELECT
-      PRODUCT,
-      CUSTOMER,
-      PURCHASECOUNT,
-      ECOMMERCE_PRODUCT_NAME,
-      CURRENT_PRICE,
-      REGULAR_PRICE,
-      URL
+    `SELECT DISTINCT
+      "PRODUCT",
+      "ECOMMERCE_PRODUCT_NAME",
+      "CURRENT_PRICE",
+      "REGULAR_PRICE",
+      "URL"
     FROM
-        JOSUELOZANO.SHOPPINGFREQUENCY
+        "JOSUELOZANO"."SHOPPINGFREQUENCY"
     WHERE
-        "CUSTOMER" = '${input.user}'`
+        PRODUCT IN (${where_query})`
   );
   // const result = records.rows.map(row => {
   //   return {

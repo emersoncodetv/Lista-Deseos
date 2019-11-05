@@ -9,14 +9,6 @@ oracledb.fetchAsString = [oracledb.CLOB];
 let pool;
 
 fdk.handle(async function(input) {
-  if (!pool) {
-    pool = await oracledb.createPool({
-      user: process.env.DB_USER || "admin",
-      password: process.env.DB_PASSWORD || "Welcome12345#",
-      connectString: process.env.CONNECT_STRING || "adwfaced_low"
-    });
-  }
-
   const browser = await getChromeBrowser();
   const page = await browser.newPage();
 
@@ -43,31 +35,52 @@ fdk.handle(async function(input) {
     }
   });
 
-  await page.goto(
-    "https://www.homecenter.com.co/homecenter-co/product/411441/?cid=prdhom961309&=INTERNO"
-  );
+  await page.goto(input.link);
 
   let data = await page.evaluate(ecommerce);
 
   await browser.close();
 
-  return data;
+  // return data;
+  if (!pool) {
+    pool = await oracledb.createPool({
+      user: process.env.DB_USER || "admin",
+      password: process.env.DB_PASSWORD || "123QWEasdZXC.",
+      connectString: process.env.CONNECT_STRING || "madhack2_low"
+    });
+  }
+
   const connection = await pool.getConnection();
 
-  const inserts = input.map(face =>
-    connection.execute(
-      "insert into EXPRESSIONS (CAPTURED_AT,EXPRESSION,PROBABILITY,DEVICE) values (:capturedAt, :expression, :probability, :device)",
-      {
-        capturedAt: getStringDate(),
-        expression: face.key,
-        probability: face.value,
-        device: face.device
-      },
-      { autoCommit: true }
-    )
+  await connection.execute(
+    `insert into JOSUELOZANO.SHOPPINGFREQUENCY (    
+          PRODUCT,
+          CUSTOMER,
+          PURCHASECOUNT,
+          ECOMMERCE_PRODUCT_NAME,
+          CURRENT_PRICE,
+          REGULAR_PRICE,
+          URL
+        ) values (
+          :product, 
+          :customer, 
+          :purchasecount, 
+          :ecommerceProductName, 
+          :currentPrice,
+          :regularPrice,
+          :url
+        )`,
+    {
+      product: input.productNameShort,
+      customer: input.customer,
+      purchasecount: 1,
+      ecommerceProductName: data.name,
+      currentPrice: data.current_price,
+      regularPrice: data.regular_price,
+      url: data.url
+    },
+    { autoCommit: true }
   );
-
-  const response = await Promise.all(inserts);
 
   // const insert = await connection.execute(
   //   "insert into EXPRESSIONS (CAPTURED_AT,EXPRESSION,PROBABILITY) values (:capturedAt, :expression, :probability )",
@@ -79,7 +92,7 @@ fdk.handle(async function(input) {
   //   { autoCommit: true }
   // );
   await connection.close();
-  return { inserts: response.length, complete: true };
+  return { ...data, ...input };
 }, {});
 
 // {"current_price":"$1.299.900UND","regular_price":"$1.379.900 UND","name":"Portátil 256Gb Ram 4Gb Endless 15 Pulgadas FHD Ci3 SSD X540UA-DM891 - Asus - 411441","url":"https://www.homecenter.com.co/homecenter-co/product/411441/?cid=prdhom961309&=INTERNO"}

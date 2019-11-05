@@ -1,6 +1,6 @@
 schema_version: 20180708
-name: getexpressionfacedetection
-version: 0.0.17
+name: get-full-next-offer
+version: 0.0.2
 runtime: docker
 memory: 256
 timeout: 120

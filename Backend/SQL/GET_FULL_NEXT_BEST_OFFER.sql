@@ -1,0 +1,23 @@
+SELECT DISTINCT
+    "PRODUCT",
+    "ECOMMERCE_PRODUCT_NAME",
+    "CURRENT_PRICE",
+    "REGULAR_PRICE",
+    "URL"
+FROM
+    "JOSUELOZANO"."SHOPPINGFREQUENCY"
+WHERE
+    PRODUCT IN ('PortatilLenovo','KitTecladoMouse');
+
+-- SELECT
+--     "PRODUCT",
+--     "PURCHASECOUNT",
+--     "ECOMMERCE_PRODUCT_NAME",
+--     "CURRENT_PRICE",
+--     "REGULAR_PRICE",
+--     "URL"
+-- FROM
+--     "JOSUELOZANO"."SHOPPINGFREQUENCY"
+-- WHERE
+--     PRODUCT IN ('PortatilLenovo')
+--     AND ROWNUM = 1;
