@@ -1,0 +1,8 @@
+schema_version: 20180708
+name: get-save-item-webpage
+version: 0.0.10
+runtime: docker
+type: async
+memory: 256
+timeout: 120
+idle_timeout: 1800
