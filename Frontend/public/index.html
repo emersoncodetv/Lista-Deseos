@@ -1,38 +1,342 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
-    <script defer src="face-api.min.js"></script>
-    <script defer src="script.js"></script>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors" />
+    <meta name="generator" content="Jekyll v3.8.5" />
+    <title>Dashboard Template · Bootstrap</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/dashboard/" />
+
+    <!-- Bootstrap core CSS -->
+    <link
+      href="Dashboard%20Template%20%C2%B7%20Bootstrap_files/bootstrap.css"
+      rel="stylesheet"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+
     <style>
-      body {
-        margin: 0;
-        padding: 0;
-        width: 100vw;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
       }
 
-      canvas {
-        position: absolute;
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <!-- Custom styles for this template -->
+    <link
+      href="Dashboard%20Template%20%C2%B7%20Bootstrap_files/dashboard.css"
+      rel="stylesheet"
+    />
+    <style type="text/css">
+      /* Chart.js */
+      @-webkit-keyframes chartjs-render-animation {
+        from {
+          opacity: 0.99;
+        }
+
+        to {
+          opacity: 1;
+        }
       }
 
-      #topright {
-        position: absolute;
-        right: 0;
-        top: 0;
-        display: block;
+      @keyframes chartjs-render-animation {
+        from {
+          opacity: 0.99;
+        }
+
+        to {
+          opacity: 1;
+        }
+      }
+
+      .chartjs-render-monitor {
+        -webkit-animation: chartjs-render-animation 0.001s;
+        animation: chartjs-render-animation 0.001s;
       }
     </style>
   </head>
-  <body>
-    <input id="topright" type="text" />
 
-    <video id="video" width="720" height="560" autoplay muted playsinline></video>
+  <body>
+    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+      <a
+        id="sesion"
+        type="button"
+        class="navbar-brand col-sm-3 col-md-2 mr-0"
+        data-toggle="modal"
+        data-target="#iniciarModal"
+        href="#"
+        >Iniciar</a
+      >
+      <!-- Button trigger modal -->
+      <!-- <button type="button" class="navbar-brand col-sm-3 col-md-2 mr-0" data-toggle="modal" data-target="#iniciarModal"> -->
+      <input
+        id="filtrar"
+        class="form-control form-control-dark w-100"
+        type="text"
+        placeholder="Buscar"
+        aria-label="Buscar"
+      />
+      <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+          <!-- <a class="nav-link" href="#">Sign out</a> -->
+        </li>
+      </ul>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a id="cargar-lista-deseos" class="nav-link" href="#">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-shopping-cart"
+                  >
+                    <circle cx="9" cy="21" r="1"></circle>
+                    <circle cx="20" cy="21" r="1"></circle>
+                    <path
+                      d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"
+                    ></path>
+                  </svg>
+                  Lista Deseos
+                </a>
+              </li>
+            </ul>
+
+            <h6
+              class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted"
+            >
+              <span>Simulación</span>
+              <a class="d-flex align-items-center text-muted" href="#">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="feather feather-plus-circle"
+                >
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="8" x2="12" y2="16"></line>
+                  <line x1="8" y1="12" x2="16" y2="12"></line>
+                </svg>
+              </a>
+            </h6>
+            <ul class="nav flex-column mb-2">
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-file-text"
+                  >
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                  </svg>
+                  Enviar Notificación
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+          <div
+            style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"
+            class="chartjs-size-monitor"
+          >
+            <div
+              class="chartjs-size-monitor-expand"
+              style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"
+            >
+              <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+            </div>
+            <div
+              class="chartjs-size-monitor-shrink"
+              style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"
+            >
+              <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+            </div>
+          </div>
+          <div
+            class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
+          >
+            <!-- <h1 class="h2">Dashboard</h1> -->
+            <div class="btn-toolbar mb-2 mb-md-0">
+              <div class="btn-group mr-2">
+                <button
+                  id="nuevo-deseo"
+                  type="button"
+                  class="btn btn-sm btn-outline-secondary"
+                  data-toggle="modal"
+                  data-target="#modalNuevoDeseo"
+                >
+                  Nuevo Deseo
+                </button>
+              </div>
+            </div>
+            
+          </div>
+
+          <h2>Lista Deseos</h2>
+          <div class="table-responsive">
+            <table class="table table-striped table-sm">
+              <thead>
+                <tr>
+                  <th>Tipo</th>
+                  <th>Producto</th>
+                  <th>Precio Actual</th>
+                  <th>Precio Normal</th>
+                  <th>Link</th>
+                </tr>
+              </thead>
+              <tbody id="lista-deseos">
+              </tbody>
+            </table>
+          </div>
+
+          <div id="mostrar-sugerencia">
+
+          </div>
+
+        </main>
+      </div>
+    </div>
+
+    <!-- Modal Inciiar -->
+    <div
+      class="modal fade"
+      id="iniciarModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="iniciarModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="iniciarModalLabel">Ingrese su usuario</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="w-form">
+              <div class="form-group">
+                <label for="usuario">Usuario</label>
+                <input type="text" id="usuario" class="form-control" />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button id="iniciar-sesion" type="button" class="btn btn-primary">Iniciar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Nuevo Deseo -->
+    <div
+      class="modal fade"
+      id="modalNuevoDeseo"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="modalNuevoDeseo"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalNuevoDeseo de deseos</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="w-form">
+              <div class="form-group">
+                <label for="city">Seleccione el tipo</label>
+
+                <select id="tipo-producto" class="browser-default custom-select">
+                  <option selected>Seleccionar...</option>
+                  <option value="Cable">Cable</option>
+                  <option value="SoporteTV">SoporteTV</option>
+                  <option value="Portatil">Portatil</option>
+                  <option value="TV">TV</option>
+                  <option value="Altavoz">Altavoz</option>
+                  <option value="Kits">Kits</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="link">Link</label>
+                <input type="text" id="link" class="form-control" />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <button id="agregar-deseo" type="button" class="btn btn-primary">
+              Guardar Link
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="Dashboard%20Template%20%C2%B7%20Bootstrap_files/jquery-3.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      window.jQuery ||
+        document.write('<script src="/docs/4.3/assets/js/vendor/jquery-slim.min.js"><\/script>');
+    </script>
+    <script
+      src="Dashboard%20Template%20%C2%B7%20Bootstrap_files/bootstrap.js"
+      integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o"
+      crossorigin="anonymous"
+    ></script>
+    <script src="./backend.js"></script>
+    <script src="./ui.js"></script>
+    <script src="./app.js"></script>
   </body>
 </html>

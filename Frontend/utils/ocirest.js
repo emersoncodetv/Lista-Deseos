@@ -23,6 +23,7 @@ function process(auth, options, callback) {
   // send the body and close the request
   request.write(body === undefined ? "" : body);
   request.end();
+  // console.log("request", request);
 }
 
 function sign(auth, request, body) {

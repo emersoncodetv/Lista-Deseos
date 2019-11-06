@@ -18,14 +18,8 @@ auth.passphrase = configuration.passphrase;
 var parameters = {
   compartmentId: configuration.compartmentId
 };
-var callback = function(data) {
-  // logger.log("debug", JSON.stringify(data));
-  console.log(JSON.stringify(data));
-  // console.log("callback", data);
-  return;
-};
 
-async function invokeFunction(functionParams, input) {
+function invokeFunction(functionParams, input, callback) {
   // logger.log("info", `invoke function for ${JSON.stringify(input)} `);
   // set up the parameter object
   parameters = {};
@@ -34,7 +28,6 @@ async function invokeFunction(functionParams, input) {
   parameters.host = functionParams.host;
   parameters.body = input;
   functions.func.invokeFunction(auth, parameters, callback);
-  return;
 } // invokeFunction
 
 // test call
@@ -58,6 +51,4 @@ async function invokeFunction(functionParams, input) {
 //   ]
 // );
 
-module.exports = {
-  InsertData: invokeFunction
-};
+module.exports = invokeFunction;
